@@ -1,5 +1,7 @@
 # Arduino based LCD Digital Clock
 
+![alt text](https://cloud.githubusercontent.com/assets/2958810/14786727/c023cdb0-0b32-11e6-9be3-d471a8cd6973.jpg "Arduino based LCD Digital Clock")
+
 This is an Arduino based digital Clock to display real time on a 16x2 LCD using a DS1307RTC module. The date and time can be set via serial interface or push button switches.
 
 Features:
