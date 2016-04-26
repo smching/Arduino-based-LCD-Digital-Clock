@@ -1,8 +1,8 @@
 /*
   DS1307 RTC LCD digital clock
-  Compatible with the Arduino IDE 1.0 and 1.6.8
-  By SM Ching (http://ediy.com.my)
-*/
+ Compatible with the Arduino IDE 1.0 and 1.6.8
+ By SM Ching (http://ediy.com.my)
+ */
 
 #define DEBUG //comment this line to disable Serial.print() & Serial.println()
 #ifdef DEBUG
@@ -65,7 +65,8 @@ void loop() {
       DEBUG_PRINT(" ");
       DEBUG_PRINTLN(timeStr(tm));
     }
-  } else {
+  } 
+  else {
     lcd.clear();
     if (RTC.chipPresent()) {
       DEBUG_PRINTLN("The DS1307 is stopped.  Please run the SetTime");
@@ -74,7 +75,8 @@ void loop() {
       lcd.print("DS1307 stopped");
       lcd.setCursor(0, SECOND_LINE);
       lcd.print("Run SetTime");
-    } else {
+    } 
+    else {
       DEBUG_PRINTLN("DS1307 read error!  Please check the circuitry.");
       DEBUG_PRINTLN();
       lcd.print("DS1307 error");
@@ -84,7 +86,7 @@ void loop() {
     delay(1000);
     lcd.clear();
   }
-  
+
   String input = serial_input();
   if (input.length() > 0) save_settings(input);
   button_input();
@@ -222,31 +224,37 @@ void save_settings(String input) {
 void button_input() {
   byte lcd_key = key_press();   // read the buttons
   switch (lcd_key) {
-    case btnRIGHT:
-      DEBUG_PRINTLN("Set Date");
+  case btnRIGHT:
+    DEBUG_PRINTLN("Set Date");
+    lcd.clear();
+    lcd.print("Set Date");
+    set_date();
+    break;
+  case btnLEFT:
+    DEBUG_PRINTLN("Set Time");
+    lcd.clear();
+    lcd.print("Set Time");
+    set_time('T');
+    break;
+  case btnUP:
+    DEBUG_PRINTLN("Set Alarm");
+    lcd.clear();
+    lcd.print("Set Alarm");
+    set_time('A');
+    break;
+  case btnDOWN:
+    if (alarm_state() == true) { //if alarm is triggered
+      DEBUG_PRINTLN("Alarm OFF");
       lcd.clear();
-      lcd.print("Set Date");
-      set_date();
-      break;
-    case btnLEFT:
-      DEBUG_PRINTLN("Set Time");
+      lcd.print("Alarm OFF");        
+      switch_alarm(LOW); //turn off the alarm
+      delay(2000);
       lcd.clear();
-      lcd.print("Set Time");
-      set_time('T');
-      break;
-    case btnUP:
-      DEBUG_PRINTLN("Set Alarm");
-      lcd.clear();
-      lcd.print("Set Alarm");
-      set_time('A');
-      break;
-    case btnDOWN:
-      if (alarm_state() == true) { //if alarm is triggered
-        switch_alarm(LOW); //turn off the alarm
-      } else {
-        toggle_alarm_mode(); //disable or enable the alarm
-      }
-      break;
+    } 
+    else {
+      toggle_alarm_mode(); //disable or enable the alarm
+    }
+    break;
   }
 }
 
@@ -290,7 +298,8 @@ void set_time(char mode) {
   if (mode == 'A') {
     tm_tem = tm_alarm;
     show_alarmtime(SECOND_LINE);
-  } else {
+  } 
+  else {
     tm_tem = tm;
     show_time(SECOND_LINE);
   }
@@ -298,7 +307,7 @@ void set_time(char mode) {
   //get_button_input(initial value, x_position, min value, max value)
   hours = get_button_input(tm_tem.Hour, 0, 0, 23); //hour ranged from 0 to 23
 
-  if (hours != -1) {
+    if (hours != -1) {
     minutes = get_button_input(tm_tem.Minute, 3, 0, 59); //minute ranged from 0 to 59
   }
 
@@ -325,19 +334,19 @@ int get_button_input(int val, byte pos_x, int min, int max) {
 
     byte lcd_key = key_press();   // read the buttons
     switch (lcd_key) {
-      case btnUP:
-        val++;
-        if (val > max) val = min;
-        break;
-      case btnDOWN:
-        val--;
-        if (val < min) val = max;
-        break;
-      case btnSELECT:
-        lcd.setCursor(pos_x, SECOND_LINE);
-        lcd.print(int2str(val));
-        return val;
-        break;
+    case btnUP:
+      val++;
+      if (val > max) val = min;
+      break;
+    case btnDOWN:
+      val--;
+      if (val < min) val = max;
+      break;
+    case btnSELECT:
+      lcd.setCursor(pos_x, SECOND_LINE);
+      lcd.print(int2str(val));
+      return val;
+      break;
     }
     blink_text(pos_x, int2str(val));
 
@@ -364,7 +373,8 @@ void blink_text(byte pos_x, String str) {
     if (showText) {
       lcd.print(str);
       showText = false;
-    } else {
+    } 
+    else {
       lcd.print(str_space);
       showText = true;
     }
@@ -394,6 +404,7 @@ boolean isTimeout() {
   }
   else return false;
 }
+
 
 
 

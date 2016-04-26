@@ -64,7 +64,8 @@ void toggle_alarm_mode() {
     enable_alarm = false;
     DEBUG_PRINTLN("Alarm Disabled");
     lcd.print("Alarm Disabled");
-  } else {
+  } 
+  else {
     enable_alarm = true;
     DEBUG_PRINTLN("Alarm Enabled");
     lcd.print("Alarm Enabled");
@@ -87,8 +88,11 @@ void alarm(tmElements_t tm, tmElements_t tm_alarm) {
 
     if (t_time == t_alarm) {
       DEBUG_PRINTLN("Alarm ON");
+      lcd.clear();
+      lcd.print("Alarm ON"); 
       switch_alarm(HIGH);
       alarm_startTime = millis();
+      delay(1000);
     }
   }
 }
@@ -108,11 +112,11 @@ boolean alarm_state() {
   return digitalRead(ALARM_PIN);
   /*
     if (digitalRead(ALARM_PIN) == HIGH) {
-    return true;
-    } else {
-    return false;
-    }
-  */
+   return true;
+   } else {
+   return false;
+   }
+   */
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -126,5 +130,6 @@ void auto_off_alarm(int seconds) {
     }
   }
 }
+
 
 
