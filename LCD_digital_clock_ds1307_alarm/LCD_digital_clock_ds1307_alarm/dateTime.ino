@@ -3,7 +3,11 @@
 // return time string in hh:nn:ss format (eg. 12:34:56)
 //////////////////////////////////////////////////////////////////////////
 String timeStr(tmElements_t tm) {
-  String result = int2str(tm.Hour) + (":") + int2str(tm.Minute) + (":") + int2str(tm.Second);
+  byte hh = tm.Hour;
+  if (hourFormat == 12) {
+    if (hh > 12) hh = hh - 12;
+  }
+  String result = int2str(hh) + (":") + int2str(tm.Minute) + (":") + int2str(tm.Second);
   return result;
 }
 
@@ -43,7 +47,7 @@ boolean check_date(int years, byte months, byte days) {
 byte get_lastday(int years, byte months) {
   byte daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   byte lastday = daysInMonth[months - 1];
-  if ((years % 4) == 0) lastday = 29; //leap year
+  if (((years % 4) == 0) && (months == 2)) lastday = 29; //leap year
   return lastday;
 }
 
@@ -51,10 +55,10 @@ byte get_lastday(int years, byte months) {
 // year can be given as '2010' or '10'.  It is converted to years since 1970
 //////////////////////////////////////////////////////////////////////////
 int year1970or2000(int yy) {
-    int result;
-    if (yy > 99) result = yy - 1970;
-    else result = yy + 30;
-    return result;
+  int result;
+  if (yy > 99) result = yy - 1970;
+  else result = yy + 30;
+  return result;
 }
 
 
