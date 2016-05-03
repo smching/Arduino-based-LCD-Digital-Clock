@@ -15,6 +15,8 @@ Features:
 	<li>Using a DS1307 RTC module.
 </ol>
 
+[![Arduino based LCD Digital Clock](https://img.youtube.com/vi/Hp1u-akidpM/0.jpg)](https://www.youtube.com/watch?v=Hp1u-akidpM)
+
 This project includes three examples that shows how to display real time on a LCD display with or without using a RTC module.
 <ol>
 <li>LCD Digital clock without RTC module.</li>
