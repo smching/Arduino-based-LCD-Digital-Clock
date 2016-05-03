@@ -43,7 +43,7 @@ boolean check_date(int years, byte months, byte days) {
 byte get_lastday(int years, byte months) {
   byte daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   byte lastday = daysInMonth[months - 1];
-  if ((years % 4) == 0) lastday = 29; //leap year
+  if (((years % 4) == 0) && (months == 2)) lastday = 29; //leap year
   return lastday;
 }
 

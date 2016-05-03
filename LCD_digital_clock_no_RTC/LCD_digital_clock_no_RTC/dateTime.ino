@@ -43,7 +43,7 @@ boolean check_date(int years, byte months, byte days) {
 byte get_lastday(int years, byte months) {
   byte daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   byte lastday = daysInMonth[months - 1];
-  if ((years % 4) == 0) lastday = 29; //leap year
+  if (((years % 4) == 0) && (months == 2)) lastday = 29; //leap year
   return lastday;
 }
 
@@ -56,7 +56,7 @@ time_t compiled_datetime() {
 
   //the time when the source file was compiled (hh:mm:ss)
   char const *str_time = __TIME__;
-  
+
   char s_month[5];
   int year;
   tmElements_t tm;
@@ -67,7 +67,7 @@ time_t compiled_datetime() {
 
   // Find where is s_month in month_names. Deduce month value.
   tm.Month = (strstr(month_names, s_month) - month_names) / 3 + 1;
-  tm.Year=year1970or2000(year);
+  tm.Year = year1970or2000(year);
   return makeTime(tm); //convert tmElements_t to time_t & return its value
 }
 
@@ -75,9 +75,9 @@ time_t compiled_datetime() {
 // year can be given as '2010' or '10'.  It is converted to years since 1970
 //////////////////////////////////////////////////////////////////////////
 int year1970or2000(int yy) {
-    int result;
-    if (yy > 99) result = yy - 1970;
-    else result = yy + 30;
-    return result;
+  int result;
+  if (yy > 99) result = yy - 1970;
+  else result = yy + 30;
+  return result;
 }
 
